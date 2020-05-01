@@ -2,6 +2,7 @@ package com.example.labsheet5;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -72,7 +73,55 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String userNameInput = name.getText().toString();
+                String passwordInput = password.getText().toString();
 
+                boolean signin = mDatabaseHelper.readInfo(userNameInput,passwordInput);
+
+                if(!TextUtils.isEmpty(userNameInput) && !TextUtils.isEmpty(passwordInput)) {
+                    if (signin) {
+                        Toast.makeText(getApplicationContext(), "Login successful", Toast.LENGTH_SHORT).show();
+                        name.setText("");
+                        password.setText("");
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Login fail", Toast.LENGTH_SHORT).show();
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(),"All fields are required",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String userNameInput = name.getText().toString();
+                String passwordInput = password.getText().toString();
+
+                boolean signin = mDatabaseHelper.readInfo(userNameInput,passwordInput);
+                Integer deleteInfo = mDatabaseHelper.deleteInfo(userNameInput);
+
+                if(!TextUtils.isEmpty(userNameInput) && !TextUtils.isEmpty(passwordInput)) {
+                    if (signin) {
+                        if (deleteInfo > 0) {
+                            Toast.makeText(getApplicationContext(), "Deleted successfully", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                        }
+                        name.setText("");
+                        password.setText("");
+                    } else {
+                        Toast.makeText(getApplicationContext(), "No account for delete", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                else{
+                    Toast.makeText(getApplicationContext(),"All fields are required",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
     }
 }

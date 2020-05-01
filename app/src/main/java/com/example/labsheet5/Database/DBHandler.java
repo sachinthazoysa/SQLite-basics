@@ -79,6 +79,46 @@ public class DBHandler extends SQLiteOpenHelper {
         }
         cursor.close();
         return userNames;
+    }
+
+    public boolean readInfo(String userName,String Password){
+        SQLiteDatabase db = getReadableDatabase();
+        boolean value = false;
+        String[] projection = {
+                UserMaster.Users._ID,
+                UserMaster.Users.COLUMN_NAME_USERNAME,
+                UserMaster.Users.COLUMN_NAME_PASSWORD
+        };
+
+        String selection = UserMaster.Users.COLUMN_NAME_USERNAME + " LIKE ?";
+        String[] selectionArgs= {userName};
+
+        Cursor cursor = db.query(
+                UserMaster.Users.TABLE_NAME,
+                projection,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+        );
+
+        while (cursor.moveToNext()){
+            String username= cursor.getString(cursor.getColumnIndexOrThrow(UserMaster.Users.COLUMN_NAME_USERNAME));
+            String password= cursor.getString(cursor.getColumnIndexOrThrow(UserMaster.Users.COLUMN_NAME_PASSWORD));
+
+             value =  username.equals(userName) && password.equals(Password);
+        }
+        cursor.close();
+       return value;
+    }
+
+
+    public int deleteInfo(String userName){
+        SQLiteDatabase db = getReadableDatabase();
+        String selection = UserMaster.Users.COLUMN_NAME_USERNAME + " Like ?";
+        String[] selectionArgs = { userName };
+        return db.delete(UserMaster.Users.TABLE_NAME,selection,selectionArgs);
 
     }
 }
