@@ -3,6 +3,7 @@ package com.example.labsheet5;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -21,5 +22,12 @@ public class MainActivity extends AppCompatActivity {
         delete = findViewById(R.id.deleteBtn);
         update = findViewById(R.id.updateBtn);
         signin = findViewById(R.id.signinBtn);
+
+        selectAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 }
