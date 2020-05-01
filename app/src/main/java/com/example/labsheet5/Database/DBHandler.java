@@ -32,14 +32,20 @@ public class DBHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
     }
 
-    public void addInfo(String userName,String password){
+    public boolean addInfo(String userName,String password){
         SQLiteDatabase db = getWritableDatabase();
-
         ContentValues values = new ContentValues();
         values.put(UserMaster.Users.COLUMN_NAME_USERNAME, userName);
         values.put(UserMaster.Users.COLUMN_NAME_PASSWORD, password);
 
-        Long newRowId= db.insert(UserMaster.Users.TABLE_NAME, null, values);
+        long newRowId= db.insert(UserMaster.Users.TABLE_NAME, null, values);
+
+        if(newRowId == -1){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
 
 
