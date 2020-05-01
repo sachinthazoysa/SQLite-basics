@@ -123,5 +123,24 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String userNameInput = name.getText().toString();
+                String passwordInput = password.getText().toString();
+
+                if(!TextUtils.isEmpty(userNameInput) && !TextUtils.isEmpty(passwordInput)) {
+                        mDatabaseHelper.updateInfo(userNameInput,passwordInput);
+                        Toast.makeText(getApplicationContext(),"Updated successfully",Toast.LENGTH_SHORT).show();
+                        name.setText("");
+                        password.setText("");
+
+                }else{
+                    Toast.makeText(getApplicationContext(),"All fields are required",Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
     }
 }

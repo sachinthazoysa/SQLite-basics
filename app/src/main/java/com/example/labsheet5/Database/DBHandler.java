@@ -119,6 +119,21 @@ public class DBHandler extends SQLiteOpenHelper {
         String selection = UserMaster.Users.COLUMN_NAME_USERNAME + " Like ?";
         String[] selectionArgs = { userName };
         return db.delete(UserMaster.Users.TABLE_NAME,selection,selectionArgs);
+    }
 
+    public void updateInfo(String userName, String password){
+        SQLiteDatabase db = getReadableDatabase();
+        ContentValues values= new ContentValues();
+        values.put(UserMaster.Users.COLUMN_NAME_PASSWORD,password);
+
+        String selection = UserMaster.Users.COLUMN_NAME_USERNAME + " LIKE ?";
+        String[] selectionArgs = { userName };
+
+        int count= db.update(
+                UserMaster.Users.TABLE_NAME,
+                values,
+                selection,
+                selectionArgs
+        );
     }
 }
